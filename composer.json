@@ -1,18 +1,19 @@
 {
-  "name": "allen/simple-pdo",
+  "name": "biaoqianwo/simple-pdo",
   "description": "A simple Pdo library for micro PHP framework",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
-      "name": "lixiang80",
+      "name": "allen",
       "email": "704872038@qq.com"
     }
   ],
+  "minimum-stability": "dev",
   "require": {},
   "autoload": {
     "psr-4": {
-      "Bee\\": "src/"
+      "Bee\\PDO\\": "src/"
     }
   }
 }

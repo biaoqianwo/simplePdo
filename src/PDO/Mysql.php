@@ -2,8 +2,9 @@
 namespace Bee\PDO;
 
 /**
+ * simple Pdo for CRUD
  * Class Mysql
- * @package Bee\Db
+ * @package Bee\PDO
  */
 class Mysql
 {
@@ -33,7 +34,6 @@ class Mysql
         $write = !empty($config['write']) ? $config['write'] : [];
         $read = !empty($config['read']) ? $config['read'] : [];
 
-
         self::$_write = self::pdo($config);
         self::$_read = self::pdo($config);
 
@@ -57,6 +57,11 @@ class Mysql
         }
     }
 
+    /**
+     * @param $statement = "insert users(`name`,`pwd`) values(?,?)"
+     * @param array|null $input_parameters = [$name, $pwd]
+     * @return mixed
+     */
     public static function insert($statement, array $input_parameters = null)
     {
         $stmt = self::$_write->prepare($statement);
@@ -64,13 +69,11 @@ class Mysql
         return self::$_write->lastInsertId();
     }
 
-    public static function delete($statement, array $input_parameters = null)
-    {
-        $stmt = self::$_write->prepare($statement);
-        $stmt->execute($input_parameters);
-        return $stmt->rowCount();
-    }
-
+    /**
+     * @param $statement = "update users set `pwd` = ? where id = ?"
+     * @param array|null $input_parameters = [$pwd, $id]
+     * @return mixed
+     */
     public static function update($statement, array $input_parameters = null)
     {
         $stmt = self::$_write->prepare($statement);
@@ -92,8 +95,8 @@ class Mysql
     }
 
     /**
-     * @param $statement = SELECT * FROM tbl WHERE condition1 < ? AND condition2 = ?
-     * @param $input_parameters = [1,'value']
+     * @param $statement = "SELECT * FROM tbl WHERE condition1 < ? AND condition2 = ?"
+     * @param $input_parameters = [$condition1, $condition2]
      * @param array $driver_options
      * @return array
      */
@@ -102,5 +105,17 @@ class Mysql
         $stmt = self::$_read->prepare($statement, $driver_options);
         $stmt->execute($input_parameters);
         return $stmt->fetchAll();
+    }
+
+    /**
+     * @param $statement = "delete from users where id = ?"
+     * @param array|null $input_parameters = [$id]
+     * @return mixed
+     */
+    public static function delete($statement, array $input_parameters = null)
+    {
+        $stmt = self::$_write->prepare($statement);
+        $stmt->execute($input_parameters);
+        return $stmt->rowCount();
     }
 }
