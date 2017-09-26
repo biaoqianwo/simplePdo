@@ -5,7 +5,7 @@ It can be done for CRUD. It support write and read are separation.
 ##How to use
 
 ### import the package
-`composer require biaoqianwo/simplePdo:dev-master`
+`composer require biaoqianwo/simple-pdo`
 
 ###Add below code in your bootstrap file (e.g. index.php):
 ```
